@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/products', {useNewUrlParser: true, useUnifiedTopology: true});
+
+mongoose.connect('mongodb://localhost/products', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connect error:'));
-db.once('open', function(){
-  console.log(`connect mongoose \\(T/..\\T)/`)
-})
+db.once('open', () => {
+  console.log('connect mongoose \\(T/..\\T)/');
+});
 
-
-let repoSchema = mongoose.Schema({
+const repoSchema = mongoose.Schema({
   name: String,
   slogan: String,
   description: String,
   category: String,
   default_price: Number,
-  relate_product_id:[type: Number],
-  styles:{
+  relate_product_id: [Number],
+  styles: {
     style_name: String,
     price: Number,
     onSale: Boolean,
@@ -24,13 +24,11 @@ let repoSchema = mongoose.Schema({
       url: String,
       thumbnail: Boolean,
     }],
-    skus:{
+    skus: {
       size: String,
       qty: Number,
-    }
-  }
+    },
+  },
 });
 
-let Repo = mongoose.model('Repo', repoSchema);
-
-
+const Repo = mongoose.model('Repo', repoSchema);
