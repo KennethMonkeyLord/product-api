@@ -8,6 +8,23 @@ db.once('open', () => {
   console.log('connect mongoose \\(T/..\\T)/');
 });
 
+const styleSchema = mongoose.Schema({
+  style_name: String,
+  price: Number,
+  onSale: Boolean,
+  default: Boolean,
+  photos: [{
+    url: String,
+    thumbnail: Boolean,
+  }],
+  skus: [{
+    size: String,
+    qty: Number,
+  }],
+});
+
+const Style = mongoose.model('Repo', styleSchema);
+
 const repoSchema = mongoose.Schema({
   name: String,
   slogan: String,
@@ -15,20 +32,7 @@ const repoSchema = mongoose.Schema({
   category: String,
   default_price: Number,
   relate_product_id: [Number],
-  styles: {
-    style_name: String,
-    price: Number,
-    onSale: Boolean,
-    default: Boolean,
-    photos: [{
-      url: String,
-      thumbnail: Boolean,
-    }],
-    skus: {
-      size: String,
-      qty: Number,
-    },
-  },
+  styles: [Style],
 });
 
 const Repo = mongoose.model('Repo', repoSchema);
