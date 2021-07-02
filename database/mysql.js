@@ -1,9 +1,10 @@
 const mysql = require('mysql');
+const { mysqlKey } =require ('./key');
 
 const con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '123456',
+  password: mysqlKey,
   database: 'products',
 });
 

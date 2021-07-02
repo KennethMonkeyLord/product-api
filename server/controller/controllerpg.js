@@ -14,7 +14,6 @@ const getAll = (req, res) => {
 };
 
 const getProduct = (req, res) => {
-  console.log(req.params.product_id, 'hi');
   const { product_id } = req.params;
   modelpg
     .getProduct(product_id)
@@ -22,6 +21,7 @@ const getProduct = (req, res) => {
       res.send(data);
     })
     .catch((err) => {
+      console.log(err)
       res.send(err);
     });
 };

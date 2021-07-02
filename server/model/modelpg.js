@@ -99,6 +99,29 @@ const getStyle = (id) => pool
     //   inner join skus on skus.style_id = s.style_id
     //   where s.product_id = $1
     // `;
+    // const query = `
+    // select s.product_id,
+    //   (select json_agg(
+    //     json_build_object(
+    //       'style_id', s.style_id,
+    //       'name', s.name,
+    //       'original_price', s.original_price,
+    //       'sale_price', s.sale_price,
+    //       'default?', s.default_,
+    //       'photos', (select json_agg(
+    //         json_build_object(
+    //           'thumbnail_url', p.thumbnail_url,
+    //           'url', p.url))
+    //         from (select * from photos where style_id=s.style_id) as p),
+    //       'skus', (select json_object_agg(
+    //         skus.id, json_build_object(
+    //           'size', skus.size,
+    //           'quantity', skus.qty))
+    //         from (select * from skus where style_id = s.style_id) as skus)))
+    //   from (select * from styles where product_id = $1) as s ) results
+    // from (select * from styles where product_id = $1) as s
+    // group by s.product_id
+    // `;
     const query = `
     select s.product_id,
       (select json_agg(
@@ -126,7 +149,6 @@ const getStyle = (id) => pool
     where s.product_id=$1
     group by s.product_id
     `;
-
     return client
       .query(query, [id])
       .then((res) => {
